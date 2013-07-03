@@ -1,44 +1,4 @@
 //Core data models for this app will lie here. 
-var expense = function (id, name, amount, category) {
-    this.Name = name;
-    this.Amount = amount;
-    this.Id = id;
-    this.Category = category;
-};
-var expenseCollection = function () {
-    this.expenses = [];
-    this.SaveKey = "expenses";
-    this.addExpense = function (name, amount, category, id) {
-        var len = this.expenses.length;
-        if (typeof id == "undefined") {
-            id = len + 1;
-        }
-        var exp = new expense(id, name, amount, category);
-        this.expenses.push(exp);
-        return exp;
-    };
-    this.DataToSave = function () {
-
-        var str = JSON.stringify(this.expenses);
-        console.log("Data to save : " + str);
-        return str;
-    };
-    this.Clear = function () {
-        this.expenses = [];
-    };
-    this.RefreshNewData = function (jsonData) {
-        var deferred = $.Deferred();
-        this.Clear();
-        var len = jsonData.length;
-        for (i = 0 ; i < len; i++) {
-            var exp = jsonData[i];
-            this.addExpense(exp.Name, exp.Amount, exp.Category, exp.Id);
-        }
-        deferred.resolve(this.expenses);
-        return deferred.promise();
-    };
-
-};
 
 var fileDAC = function () {
     var obToSave = null;

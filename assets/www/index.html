@@ -16,8 +16,8 @@
                 <a class="brand" href="#">Expense Management</a>
                 <ul class="nav">
                     <li id="navCurrentExpenses" class="active"><a href="#">My Expenses</a></li>
-                    <li id="navNewExpense"><a href="#">New Expense</a></li>
-                    <li id="navSync"><a href="#">Sync</a></li>
+                    <li id="navNewExpense"><a href="#"><i class="icon-plus"></i> Expense</a></li>
+                    <li id="navSync"><a href="#"> <span id="badgeExpense" class="badge badge-success"></span> Sync <i id="wifiStatus" class=""></i></a></li>
                 </ul>
             </div>
         </div>
@@ -40,6 +40,7 @@
     <script type="text/javascript" src="js/handlebars.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/appmodel.js"></script>
 
 
     <script id="newExpenseTemplate" type="text/x-handlebars-template">
@@ -58,10 +59,11 @@
     <script id="template" type="text/x-handlebars-template">
 	        <div class="well well-small">
                 <div class="page-header">
-                    <h3>${{Amount}} on <small>{{Name}}:{{Category}}</small> </h1>
+                    
+                    <h3> ${{Amount}} on <small>{{Name}}:{{Category}}</small> {{#unless Id}} <span class="badge badge-success">New</span>{{/unless}} </h1>
                 </div>
                 <button type="submit" class="btn btn-success" id="btnSync">Edit</button>
-                <button type="submit" class="btn btn-danger" id="btnSync">Delete</button>
+                <button type="submit" class="btn btn-danger" id="btnSync" onClick = app1.RemoveExpense("{{Id}}")>Delete</button>
 	        </div>
         </script>
 
