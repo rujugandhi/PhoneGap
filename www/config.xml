@@ -18,16 +18,16 @@
  under the License.
 -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        id        = "io.cordova.expenseManager"
-        version   = "2.0.0">
+        id        = "zs.javelin.expenseManager"
+        version   = "3.0.0">
     <name>Expense Manager</name>
 
     <description>
-        A simple app to manage your daily expenses.
+        A simple application to track your expenses. 
     </description>
 
-    <author href="http://cordova.io" email="dev@cordova.apache.org">
-        ZS Assocociates. Mobile Team.
+    <author href="http://zsassociates.com" email="asad.palekar@zsassociates.com">
+        ZS Associates Mobile Development Team
     </author>
 
     <access origin="*"/>
@@ -102,7 +102,4 @@
       <param name="android-package" value="org.apache.cordova.InAppBrowser"/>
     </feature>
     <!-- Deprecated plugins element. Remove in 3.0 -->
-    <plugins>
-    	<plugin name="Notification" value="org.apache.cordova.Notification"/>
-    </plugins>
 </widget>

@@ -71,6 +71,7 @@ var ServerDAC = function () {
 
     this.Read = function (data) {
         //read data from server
+        console.log("requesting data from server");
         return $.ajax({
             type: "POST",
             url: data.url,

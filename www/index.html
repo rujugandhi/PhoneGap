@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="cordova.js"></script>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <title>Hello World</title>
+    
 </head>
 <body>
 
@@ -17,7 +19,7 @@
                 <ul class="nav">
                     <li id="navCurrentExpenses" class="active"><a href="#">My Expenses</a></li>
                     <li id="navNewExpense"><a href="#"><i class="icon-plus"></i> Expense</a></li>
-                    <li id="navSync"><a href="#"> <span id="badgeExpense" class="badge badge-success">0</span> Sync <i id="wifiStatus" class=""></i></a></li>
+                    <li id="navSync"><a href="#"> <span id="badgeExpense" class="badge badge-success"></span> Sync <i id="wifiStatus" class=""></i></a></li>
                 </ul>
             </div>
         </div>
@@ -34,8 +36,47 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="phonegap.js"></script>
-	<script src="http://debug.phonegap.com/target/target-script-min.js#asaddeployed"></script>
+
+    <script id="newExpenseTemplate" type="text/x-handlebars-template">
+            <fieldset>
+                            <legend>Add a new expense</legend>
+                            <label>Spent on:</label>
+                            <input type="text" placeholder="Where did the money go?" id="txtName">
+                            <label>Amount :</label>
+                            <input type="number" placeholder="how much" id="txtAmount">
+                            <label>Category :</label>
+                            <input type="text" placeholder="Category.." id="txtCategory">
+                            <p><button type="submit" class="btn btn-success" id="btnSave">Save</button><p>
+            </fieldset>
+        </script>
+
+    <script id="template" type="text/x-handlebars-template">
+	        <div class="well well-small" id=exp_{{Id}}>
+                <div class="page-header">
+                    <h3> ${{Amount}} on <small>{{Name}}:{{Category}}</small> {{#if AddedOnDevice}} <span class="badge badge-success">New</span>{{/if}} </h1>
+                </div>
+                <button type="submit" class="btn btn-success" id="btnSync" onClick = app1.EditExpense("{{Id}}")>Edit</button>
+                <button type="submit" class="btn btn-danger" id="btnSync" onClick = app1.RemoveExpense("{{Id}}")>Delete</button>
+	        </div>
+    </script>
+    
+    <script id="editExpenseTemplate" type="text/x-handlebars-template">
+            <div class="page-header">
+                    <h3> $ <input type='number' value='{{Amount}}' /> on 
+                    <small><input type='text' value='{{Name}}' /> :<input type='text' value='{{Category}}' /></small> {{#if AddedOnDevice}} <span class="badge badge-success">New</span>{{/if}} </h1>
+                </div>
+                <button type="submit" class="btn btn-success" id="btnSync">Change</button>
+                <button type="submit" class="btn btn-danger" id="btnSync" onClick = app1.CancelEdit("{{Id}}")>Cancel</button>
+    </script>
+
+    <script id="footerTemplate" type="text/x-handlebars-template">
+        	<div>
+        		<p>Connection type : {{Connection}}</p>
+        	<div>
+    </script>
+
+    
+    
     <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/handlebars.js"></script>
@@ -44,39 +85,10 @@
     <script type="text/javascript" src="js/appmodel.js"></script>
 
 
-    <script id="newExpenseTemplate" type="text/x-handlebars-template">
-            <fieldset>
-                            <legend>Add a new expense</legend>
-                            <label>Spent on:</label>
-                            <input type="text" placeholder="Where did the money go?" id="txtName">
-                            <label>Amount :</label>
-                            <input type="text" placeholder="how much" id="txtAmount">
-                            <label>Category :</label>
-                            <input type="text" placeholder="Category.." id="txtCategory">
-                            <p><button type="submit" class="btn btn-success" id="btnSave">Save</button><p>
-            </fieldset>
-        </script>
-
-    <script id="template" type="text/x-handlebars-template">
-	        <div class="well well-small">
-                <div class="page-header">
-                    
-                    <h3> ${{Amount}} on <small>{{Name}}:{{Category}}</small> {{#unless Id}} <span class="badge badge-success">New</span>{{/unless}} </h1>
-                </div>
-                <button type="submit" class="btn btn-success" id="btnSync">Edit</button>
-                <button type="submit" class="btn btn-danger" id="btnSync" onClick = app1.RemoveExpense("{{Id}}")>Delete</button>
-	        </div>
-        </script>
-
-    <script id="footerTemplate" type="text/x-handlebars-template">
-        	<div>
-        		<p>Connection type : {{Connection}}</p>
-        	<div>
-        </script>
-
     <script type="text/javascript">
+        console.log("Initializing application");
         var app1 = new MainApp();
         app1.initialize();
-        </script>
+    </script>
 </body>
 </html>

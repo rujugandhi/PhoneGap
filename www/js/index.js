@@ -16,6 +16,7 @@ var MainApp = function () {
 
     // Application Constructor
     this.initialize = function () {
+        console.log("binding device ready events");
         document.addEventListener("deviceready", onDeviceReady, true);
     };
 
@@ -27,10 +28,23 @@ var MainApp = function () {
         });
     };
 
+    this.EditExpense = function (expId) {
+        navigator.notification.alert("You need to be authenticated to make changes.");
+        //var exp = expenses.GetExpenseById(expId);
+        //var editTemplate = Handlebars.compile($('#editExpenseTemplate').html());
+
+        //$('#exp_' + expId).html(editTemplate(exp));
+    };
+
+    this.CancelEdit = function(expId) {
+        var exp = expenses.GetExpenseById(expId);
+        
+    };
+
     var refreshTemplate = function (data) {
 
         $('#contents').html('');
-        if (data.length > 0) {
+        if (data != null && data.length > 0) {
             for (i = 0; i < data.length; i++) {
                 $('#contents').append(expenseTemplate(data[i]));
             }
@@ -38,6 +52,11 @@ var MainApp = function () {
             $('#contents').append("<span class='label label-info'>No expense where found. Starting adding them!</span>");
 
         }
+        
+
+    };
+
+    var fetchNewDataFromServer = function() {
         if (deviceInfo.IsConnected) {
             //Update the wifi icon
             $('#wifiStatus').addClass("icon-signal");
@@ -46,13 +65,16 @@ var MainApp = function () {
                 url: "http://splitexpense.apphb.com/UserExpenses/GetAllExpenses",
                 objectToRead: expenses
             }).done(function (response) {
+                console.log("data recieved from server");
+                console.log(response);
                 var newExpensesCount = expenses.ProcessNewServerData(response);
                 $('#badgeExpense').html(newExpensesCount);
+            }).fail(function () {
+                console.log("request failed");
             });
         } else {
             $('#wifiStatus').removeClass("icon-signal");
         }
-        
     };
 
     var onDeviceReady = function () {
@@ -68,10 +90,11 @@ var MainApp = function () {
        // $('#footer .container').append(footerTemplate(deviceInfo));
         dac = new dbDAC();
         dac.Read(expenses).done(expenses.RefreshNewData).done(refreshTemplate);
-        
+        fetchNewDataFromServer();
         $('ul.nav li').on('click', function () {
             $('li.active').removeClass('active');
             $(this).addClass('active');
+            fetchNewDataFromServer();
         });
 
         $('#navNewExpense').on('click', function () {
