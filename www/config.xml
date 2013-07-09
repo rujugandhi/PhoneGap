@@ -18,16 +18,16 @@
  under the License.
 -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        id        = "io.cordova.helloCordova"
+        id        = "io.cordova.expenseManager"
         version   = "2.0.0">
-    <name>Hello Cordova</name>
+    <name>Expense Manager</name>
 
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A simple app to manage your daily expenses.
     </description>
 
     <author href="http://cordova.io" email="dev@cordova.apache.org">
-        Apache Cordova Team
+        ZS Assocociates. Mobile Team.
     </author>
 
     <access origin="*"/>
